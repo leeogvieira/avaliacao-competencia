@@ -1,0 +1,10 @@
+services:
+  vue-app:
+    container_name: avaliacao-competencias
+    build:
+        context: ./.docker
+        dockerfile: Dockerfile
+    ports:
+        - '8181:80'
+    volumes:
+        - .:/app

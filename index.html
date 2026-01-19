@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Avaliação de Competência</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+    <div id="app">
+        <!-- Exibe o título "Avaliação de Competência" na tela inicial, o nome da categoria nas perguntas, e "Resultado" na tela de resultados -->
+        <h1 v-if="showIntro">Avaliação de Competência</h1>
+        <h1 v-else-if="showResult">Resultado</h1>
+        <h1 v-else>{{ category }}</h1>
+
+        <!-- Tela de Boas-vindas -->
+        <div v-if="showIntro">
+            <p>Bem-vindo(a) à Avaliação de Competência!</p>
+            <button @click="startQuiz">Clique para começar</button>
+        </div>
+
+        <!-- Perguntas por Categoria -->
+        <div v-if="!showIntro && !showResult && category && step < 5">
+            <p>{{ currentQuestion }}</p>
+            <button @click="answer('sim')">Sim</button>
+            <button @click="answer('nao')">Não</button>
+            <button @click="answer('as_vezes')">Às vezes</button>
+        </div>
+
+        <!-- Resultado -->
+        <div v-if="showResult">
+            <h3>Percentual de respostas para cada competência</h3>
+
+            <div class="progress-container" v-for="(score, cat) in scores" :key="cat">
+                <h4>{{ cat }}</h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" :style="{ width: score + '%' }">
+                        <span class="progress-label">{{ score }}%</span>
+                    </div>
+                </div>
+            </div>
+
+            <button @click="reset">Refazer o teste</button>
+        </div>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
